@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<hdevelop file_version="1.2" halcon_version="18.05.0.1">
+<procedure name="rotate_lesnak_mono_v0">
+<interface>
+<io>
+<par name="Image" base_type="iconic" dimension="0"/>
+</io>
+<oo>
+<par name="ImageAffineTrans" base_type="iconic" dimension="0"/>
+</oo>
+</interface>
+<body>
+<l>    lesnak_outer_boundary_region (Image, RegionClosing)</l>
+<l>    reduce_domain (Image, RegionClosing, ImageReduced)</l>
+<l>    region_features (RegionClosing, 'area', Value)</l>
+<l>    orientation_region (RegionClosing, Phi)</l>
+<c>    </c>
+<l>    area_center (RegionClosing, Area, Row, Column)</l>
+<c>    </c>
+<c>    </c>
+<c>    </c>
+<c>    </c>
+<c>    </c>
+<l>    degree:=deg(Phi)</l>
+<c>    </c>
+<l>*     threshold (Image, Region1, 170, 190)</l>
+<l>*     connection (Region1, ConnectedRegions1)</l>
+<l>*     fill_up (ConnectedRegions1, RegionFillUp2)</l>
+<l>*     opening_circle (RegionFillUp2, RegionOpening, 30)</l>
+<l>*     closing_circle (RegionOpening, RegionClosing1, 3.5)</l>
+<l>*     fill_up_shape (RegionClosing1, RegionFillUp1, 'area', 1, 100)</l>
+<l>*     select_shape (RegionClosing1, SelectedRegions, 'area', 'and', 1000, 200000)</l>
+<l>*     area_center (SelectedRegions, Area1, Row1, Column1)</l>
+<l>*     diff_row:=Row-Row1</l>
+<l>*     diff_colu:=Column-Column1</l>
+<l>*     if (diff_colu&lt;0 )</l>
+<l>*         new_angle:=360-deg(Phi)</l>
+<l>*     else </l>
+<l>*         new_angle:=180-deg(Phi)</l>
+<l>*     endif</l>
+<l>    rotate_image (Image, ImageAffineTrans, 180-deg(Phi), 'constant')</l>
+<c>    </c>
+<l>    lesnak_outer_boundary_region (ImageAffineTrans, RegionClosing2)</l>
+<c>    </c>
+<l>    smallest_rectangle1 (RegionClosing2, Row11, Column11, Row2, Column2)</l>
+<c>    </c>
+<c>    </c>
+<c>    </c>
+<l>    hom_mat2d_identity (Matrix1)</l>
+<l>    get_image_size (Image, Width, Height)</l>
+<l>    hom_mat2d_translate (Matrix1, -(Row11-20), -(Column11-20), HomMat2DTranslate)</l>
+<l>    affine_trans_image (ImageAffineTrans, ImageAffineTrans, HomMat2DTranslate, 'constant', 'false')</l>
+<c></c>
+<c></c>
+<l>return ()</l>
+</body>
+<docu id="rotate_lesnak_mono_v0">
+<parameters>
+<parameter id="Image"/>
+<parameter id="ImageAffineTrans"/>
+</parameters>
+</docu>
+</procedure>
+</hdevelop>

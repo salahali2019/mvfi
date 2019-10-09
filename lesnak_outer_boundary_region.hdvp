@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<hdevelop file_version="1.2" halcon_version="18.05.0.1">
+<procedure name="lesnak_outer_boundary_region">
+<interface>
+<io>
+<par name="Image" base_type="iconic" dimension="0"/>
+</io>
+<oo>
+<par name="RegionClosing" base_type="iconic" dimension="0"/>
+</oo>
+</interface>
+<body>
+<l>    edges_sub_pix (Image, Edges, 'canny', 5, 2, 15)</l>
+<l>    gen_region_contour_xld (Edges, Region, 'filled')</l>
+<l>    union1 (Region, RegionUnion)</l>
+<l>    connection (RegionUnion, ConnectedRegions)</l>
+<l>    select_shape (ConnectedRegions, SelectedRegions1, 'area', 'and', 851563, 2e+006)</l>
+<c></c>
+<c>    </c>
+<l>    fill_up (SelectedRegions1, RegionFillUp)</l>
+<l>    opening_rectangle1 (RegionFillUp, RegionOpening, 10, 10)</l>
+<c>    </c>
+<l>    closing_rectangle1 (RegionFillUp, RegionClosing, 2, 50)</l>
+<l>return ()</l>
+</body>
+<docu id="lesnak_outer_boundary_region">
+<abstract lang="en_US">create outer boundary for the lesnak</abstract>
+<parameters>
+<parameter id="Image"/>
+<parameter id="RegionClosing"/>
+</parameters>
+</docu>
+</procedure>
+</hdevelop>
